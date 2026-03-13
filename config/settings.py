@@ -4,18 +4,30 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def _get_secret(key: str, default: str = "") -> str:
+    """Get a secret from Streamlit Cloud secrets or environment variables."""
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets") and key in st.secrets:
+            return str(st.secrets[key])
+    except Exception:
+        pass
+    return os.getenv(key, default)
+
+
 # Google OAuth 2.0
-GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID", "")
-GOOGLE_CLIENT_SECRET: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI: str = os.getenv("GOOGLE_REDIRECT_URI", "http://localhost:8501")
+GOOGLE_CLIENT_ID: str = _get_secret("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET: str = _get_secret("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI: str = _get_secret("GOOGLE_REDIRECT_URI", "http://localhost:8501")
 GOOGLE_SCOPES: list[str] = ["https://www.googleapis.com/auth/webmasters.readonly"]
 
 # DataForSEO
-DATAFORSEO_LOGIN: str = os.getenv("DATAFORSEO_LOGIN", "")
-DATAFORSEO_PASSWORD: str = os.getenv("DATAFORSEO_PASSWORD", "")
+DATAFORSEO_LOGIN: str = _get_secret("DATAFORSEO_LOGIN")
+DATAFORSEO_PASSWORD: str = _get_secret("DATAFORSEO_PASSWORD")
 
 # ScrapingBee
-SCRAPINGBEE_API_KEY: str = os.getenv("SCRAPINGBEE_API_KEY", "")
+SCRAPINGBEE_API_KEY: str = _get_secret("SCRAPINGBEE_API_KEY")
 
 # Analysis defaults
 DEFAULT_DATE_RANGE_DAYS: int = int(os.getenv("DEFAULT_DATE_RANGE_DAYS", "28"))
