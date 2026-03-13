@@ -62,7 +62,7 @@ def main():
                         "intent_data", "competitor_data", "gap_analyses", "actions",
                         "summary_stats", "date_series", "selected_keyword"]:
                 st.session_state.pop(key, None)
-            st.experimental_rerun()
+            st.rerun()
 
         st.markdown("---")
 
@@ -82,7 +82,7 @@ def main():
                         "competitor_data", "gap_analyses", "actions",
                         "summary_stats", "date_series"]:
                 st.session_state.pop(key, None)
-            st.experimental_rerun()
+            st.rerun()
 
         # Analysis settings
         with st.expander("Analysis Settings"):
@@ -98,7 +98,7 @@ def main():
         st.markdown("---")
         if st.button("Logout"):
             logout()
-            st.experimental_rerun()
+            st.rerun()
 
     # Run analysis if not done
     if "analysis_complete" not in st.session_state:
@@ -142,7 +142,7 @@ def render_property_selector(credentials):
 
     if st.button("Start Analysis"):
         st.session_state["selected_property"] = selected
-        st.experimental_rerun()
+        st.rerun()
 
 
 def run_full_analysis(credentials):
@@ -179,7 +179,7 @@ def run_full_analysis(credentials):
             st.session_state["opportunities"] = gsc_data
             st.session_state["actions"] = []
             st.session_state["gap_analyses"] = []
-            st.experimental_rerun()
+            st.rerun()
             return
 
         # Phase 2: Identify opportunities
@@ -201,7 +201,7 @@ def run_full_analysis(credentials):
             st.session_state["analysis_complete"] = True
             st.session_state["actions"] = []
             st.session_state["gap_analyses"] = []
-            st.experimental_rerun()
+            st.rerun()
             return
 
         # Phase 3: Scrape user's pages
@@ -374,7 +374,7 @@ def run_full_analysis(credentials):
         )
 
         st.session_state["analysis_complete"] = True
-        st.experimental_rerun()
+        st.rerun()
 
     except Exception as e:
         progress.progress(100)

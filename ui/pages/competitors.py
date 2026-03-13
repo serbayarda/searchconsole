@@ -37,7 +37,7 @@ def render():
 
     if summary_rows:
         summary_df = pd.DataFrame(summary_rows)
-        st.dataframe(summary_df)
+        st.dataframe(summary_df, use_container_width=True)
 
     st.markdown("---")
 
@@ -93,7 +93,7 @@ def render():
             return ""
 
         styled = checklist_df.style.map(color_result)
-        st.dataframe(styled)
+        st.dataframe(styled, use_container_width=True)
 
     st.markdown("---")
 

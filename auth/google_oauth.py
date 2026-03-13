@@ -87,19 +87,14 @@ def _store_credentials(creds: Credentials) -> None:
 
 
 def handle_oauth_callback() -> bool:
-    params = st.experimental_get_query_params()
-    code = params.get("code")
+    code = st.query_params.get("code")
     if not code:
         return False
-
-    # experimental_get_query_params returns dict of lists
-    if isinstance(code, list):
-        code = code[0]
 
     try:
         creds = exchange_code_for_credentials(code)
         _store_credentials(creds)
-        st.experimental_set_query_params()
+        st.query_params.clear()
         return True
     except Exception as e:
         st.error(f"OAuth authentication failed: {e}")
@@ -120,12 +115,7 @@ def render_login_ui() -> None:
         return
 
     auth_url = get_authorization_url()
-    st.markdown(
-        f'<a href="{auth_url}" target="_self" style="display:inline-block;padding:0.5em 1em;'
-        f'background-color:#4CAF50;color:white;text-decoration:none;border-radius:4px;">'
-        f'Connect Google Search Console</a>',
-        unsafe_allow_html=True,
-    )
+    st.link_button("Connect Google Search Console", auth_url, type="primary")
 
 
 def logout() -> None:

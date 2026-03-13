@@ -36,7 +36,7 @@ def render_keyword_table(df: pd.DataFrame, key_prefix: str = "kw"):
     if "opportunity_score" in display_df.columns:
         display_df["opportunity_score"] = display_df["opportunity_score"].apply(lambda x: f"{x:.0f}")
 
-    st.dataframe(display_df)
+    st.dataframe(display_df, use_container_width=True)
 
 
 def render_action_card(action: dict):
@@ -65,7 +65,7 @@ def render_competitor_table(competitors: list[dict]):
         st.info("No competitor data available.")
         return
     df = pd.DataFrame(competitors)
-    st.dataframe(df)
+    st.dataframe(df, use_container_width=True)
 
 
 def priority_badge(priority: str) -> str:

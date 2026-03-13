@@ -77,7 +77,7 @@ def render():
         serp_df = pd.DataFrame(serp)
         display_cols = ["rank", "title", "domain", "url"]
         existing = [c for c in display_cols if c in serp_df.columns]
-        st.dataframe(serp_df[existing])
+        st.dataframe(serp_df[existing], use_container_width=True)
     else:
         st.info("SERP data not available for this keyword.")
 
